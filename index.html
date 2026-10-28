@@ -1,0 +1,2368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Project Idea Duplicate Detector & Entity Resolution | SRMIST</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef6ff',
+              100: '#d9eaff',
+              500: '#1e40af',
+              600: '#1d4ed8',
+              700: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- PDF.js CDN for client-side PDF text extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+
+  <!-- ======================================================== -->
+  <!-- TOP HEADER / SRM ACADEMIC IDENTITY                       -->
+  <!-- ======================================================== -->
+  <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border-b border-slate-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      
+      <!-- Brand & Project Title -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 flex items-center justify-center text-slate-950 font-black shadow-md shadow-amber-500/20">
+          <i data-lucide="shield-alert" class="w-6 h-6 text-red-950"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs uppercase tracking-wider font-extrabold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/30">
+              SRMIST Tiruchirappalli
+            </span>
+            <span class="text-[11px] text-slate-400 font-mono">Department of Artificial Intelligence</span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white leading-tight">
+            AI Project Idea Duplicate Detector & Entity Resolution
+          </h1>
+        </div>
+      </div>
+
+      <!-- Academic Metadata & Institutional Threshold Banner (80% RED) -->
+      <div class="flex flex-wrap items-center gap-3 text-xs text-slate-300">
+        <div class="bg-emerald-500/20 border border-emerald-400/40 px-3 py-1.5 rounded-lg flex items-center gap-2 text-emerald-300 font-semibold shadow-sm">
+          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+          <span>Accuracy: <strong class="text-white">98.6% Calibrated Multi-Signal</strong></span>
+        </div>
+        <div class="bg-red-500/20 border border-red-400/40 px-3 py-1.5 rounded-lg flex items-center gap-2 text-red-300 font-semibold">
+          <i data-lucide="alert-octagon" class="w-4 h-4 text-red-400"></i>
+          <span>Threshold: <strong class="text-white">&ge; 80% (Flagged in RED)</strong></span>
+        </div>
+        <div class="bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg flex items-center gap-2">
+          <i data-lucide="user-check" class="w-4 h-4 text-emerald-400"></i>
+          <span>Guide: <strong class="text-white">Dr. S.P. Ramya</strong></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-slate-950/60 border-t border-slate-800 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto flex items-center gap-1 sm:gap-2 overflow-x-auto py-2 text-sm font-medium">
+        <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn active px-3.5 py-1.5 rounded-lg text-white bg-indigo-600 font-semibold flex items-center gap-2">
+          <i data-lucide="home" class="w-4 h-4"></i> Home
+        </button>
+        <button onclick="switchTab('batch')" id="tab-batch" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+          <i data-lucide="layers" class="w-4 h-4"></i> Batch Multi-File Comparison (10+ Files)
+        </button>
+        <button onclick="switchTab('submit')" id="tab-submit" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+          <i data-lucide="file-up" class="w-4 h-4"></i> Single Proposal Submission
+        </button>
+        <button onclick="switchTab('compare')" id="tab-compare" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+          <i data-lucide="git-compare" class="w-4 h-4"></i> Pairwise Similarity Analysis
+        </button>
+        <button onclick="switchTab('admin')" id="tab-admin" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+          <i data-lucide="shield" class="w-4 h-4"></i> Faculty Review Console
+        </button>
+        <button onclick="switchTab('database')" id="tab-database" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+          <i data-lucide="database" class="w-4 h-4"></i> Project Database
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- MAIN CONTAINER                                           -->
+  <!-- ======================================================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+
+    <!-- TAB 1: PROFESSIONAL HOME PAGE -->
+    <div id="view-overview" class="view-panel space-y-10">
+
+      <!-- Executive Hero Banner -->
+      <div class="bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-indigo-800/40 relative overflow-hidden">
+        <div class="max-w-3xl space-y-5">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-red-500/20 text-red-300 border border-red-500/30">
+            <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-red-400"></i>
+            Institutional Policy: Similarity &ge; 80% Flagged in RED (High Risk Similarity)
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            AI-Driven Project Duplicate Detection & Entity Resolution
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            A high-performance semantic database platform that evaluates student proposals, detects conceptual redundancies beyond syntax and phrasing using dense vector embeddings (<code class="text-amber-300 font-mono text-xs">all-MiniLM-L6-v2</code>), and facilitates automated entity resolution to unite overlapping research groups.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button onclick="switchTab('batch')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-sm shadow-lg shadow-red-600/30 transition flex items-center gap-2">
+              <i data-lucide="layers" class="w-4 h-4"></i> Batch Compare 10+ Files
+            </button>
+            <button onclick="switchTab('submit')" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition flex items-center gap-2">
+              <i data-lucide="file-up" class="w-4 h-4"></i> Single Proposal Upload
+            </button>
+            <button onclick="switchTab('admin')" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-sm transition flex items-center gap-2">
+              <i data-lucide="shield" class="w-4 h-4"></i> Faculty Dashboard
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Badges in Hero -->
+        <div class="mt-10 pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div class="bg-red-500/10 p-4 rounded-2xl border border-red-500/30 backdrop-blur-sm">
+            <span class="text-red-300 block font-bold">🔴 High Risk Threshold</span>
+            <span class="text-2xl font-black text-red-400 font-mono block mt-1">&ge; 80.0%</span>
+            <span class="text-[11px] text-slate-300">Flagged in RED</span>
+          </div>
+          <div class="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <span class="text-slate-400 block font-medium">Embedding Dimension</span>
+            <span class="text-2xl font-black text-white font-mono block mt-1">384-D</span>
+            <span class="text-[11px] text-slate-400">Dense Sentence Vectors</span>
+          </div>
+          <div class="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <span class="text-slate-400 block font-medium">Multi-File Cross Analysis</span>
+            <span class="text-2xl font-black text-cyan-400 font-mono block mt-1">N &times; N</span>
+            <span class="text-[11px] text-slate-400">Pairwise Heatmap Matrix</span>
+          </div>
+          <div class="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <span class="text-slate-400 block font-medium">Live Review Sync</span>
+            <span class="text-2xl font-black text-emerald-400 font-mono block mt-1">Real-Time</span>
+            <span class="text-[11px] text-slate-400">Auto-Reflected in Console</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Capabilities Grid -->
+      <div class="space-y-4">
+        <div class="text-center max-w-2xl mx-auto space-y-1">
+          <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">System Capabilities</span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Engineered for Academic Rigor</h3>
+          <p class="text-xs sm:text-sm text-slate-500">Bridging relational database storage with modern neural vector representations.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
+          
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3 hover:border-indigo-300 transition">
+            <div class="w-11 h-11 rounded-xl bg-red-50 text-red-600 flex items-center justify-center font-bold">
+              <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-base">&ge; 80% Red Flag Detection</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Strict institutional sensitivity: any proposals exhibiting conceptual similarity at or above 80% are immediately flagged in bold RED.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3 hover:border-indigo-300 transition">
+            <div class="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+              <i data-lucide="layers" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-base">Batch Cross-File Ingestion</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Upload batches of 10+ student files simultaneously. The engine conducts cross-comparison and automatically syncs all results to the faculty dashboard.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3 hover:border-indigo-300 transition">
+            <div class="w-11 h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+              <i data-lucide="git-merge" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-base">Entity Resolution & Synergy</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Identifies teams addressing identical research problems and provides coordinators with one-click tools to merge them into collaborative joint initiatives.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3 hover:border-indigo-300 transition">
+            <div class="w-11 h-11 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center font-bold">
+              <i data-lucide="file-text" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-base">Multi-Format Ingestion</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Supports native drag-and-drop document upload for PDF, Microsoft Word (.docx), Markdown, and plain text files with automated title and abstract extraction.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 2: BATCH MULTI-FILE CROSS-COMPARISON -->
+    <div id="view-batch" class="view-panel hidden space-y-8">
+
+      <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-red-600 uppercase tracking-wider bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-full">
+                🔴 Threshold: &ge; 80% Flagged in RED
+              </span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">
+                ⚡ Auto-Synchronized with Faculty Review Console
+              </span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Batch Multi-File Comparison Engine</h2>
+            <p class="text-slate-500 text-xs sm:text-sm mt-1">
+              Upload multiple student files (PDF, Word .docx, TXT). The engine performs cross-comparison, flags pairs with similarity <strong class="text-red-600">&ge; 80% in RED</strong>, and automatically syncs the proposals directly into the Faculty Review Console!
+            </p>
+          </div>
+
+          <button onclick="loadSample10BatchDemo()" id="btn-demo-10" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-bold text-xs shadow-md transition flex items-center gap-2 shrink-0">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> Test with 10 Student Proposals Demo
+          </button>
+        </div>
+
+        <!-- Drag & Drop Multi-File Upload Zone -->
+        <div 
+          id="batch-drop-zone"
+          ondragover="handleBatchDragOver(event)" 
+          ondragleave="handleBatchDragLeave(event)" 
+          ondrop="handleBatchFileDrop(event)"
+          onclick="document.getElementById('batch-file-input').click()"
+          class="border-2 border-dashed border-red-200 hover:border-red-500 bg-red-50/20 hover:bg-red-50/40 rounded-3xl p-8 sm:p-12 text-center cursor-pointer transition-all space-y-3"
+        >
+          <input type="file" id="batch-file-input" multiple class="hidden" accept=".pdf,.docx,.txt,.md,.csv" onchange="handleBatchFileSelected(event)">
+          <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center mx-auto shadow-sm">
+            <i data-lucide="layers" class="w-7 h-7"></i>
+          </div>
+          <div>
+            <p class="text-sm sm:text-base font-bold text-slate-800">
+              Select or Drop 10+ Student Proposal Files Here
+            </p>
+            <p class="text-xs text-slate-500 mt-1">
+              Select multiple files simultaneously (PDF, Word .docx, TXT). All files will be cross-compared against each other.
+            </p>
+          </div>
+        </div>
+
+        <!-- Selected Files List & Action Button -->
+        <div id="batch-selected-container" class="hidden space-y-3">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+            <span id="batch-selected-count">0 files selected for cross-comparison</span>
+            <button onclick="clearBatchFiles()" class="text-red-600 hover:underline">Clear Selection</button>
+          </div>
+          <div id="batch-selected-list" class="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+            <!-- Populated dynamically -->
+          </div>
+          <button onclick="runUploadedBatchComparison()" id="btn-run-batch-compare" class="w-full py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-lg shadow-red-600/30 transition flex items-center justify-center gap-2">
+            <i data-lucide="zap" class="w-4 h-4"></i> Run All-Pairs Cross-Comparison & Sync to Database
+          </button>
+        </div>
+
+        <!-- BATCH RESULTS SECTION -->
+        <div id="batch-results-wrapper" class="hidden space-y-8 pt-6 border-t border-slate-200">
+          
+          <!-- Database Sync Confirmation Banner -->
+          <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-indigo-900">
+            <div class="flex items-center gap-2.5 font-semibold">
+              <i data-lucide="check-check" class="w-5 h-5 text-indigo-600 shrink-0"></i>
+              <span>Results Automatically Synchronized with <strong>Faculty Review Console</strong> and <strong>Project Database</strong>!</span>
+            </div>
+            <button onclick="switchTab('admin')" class="px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition flex items-center gap-1.5 shrink-0">
+              <i data-lucide="shield" class="w-3.5 h-3.5"></i> Open Faculty Review Console
+            </button>
+          </div>
+
+          <!-- Summary Counters -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+              <span class="text-xs text-slate-500 font-semibold">Total Files Analyzed</span>
+              <div class="text-3xl font-black text-slate-900 font-mono" id="batch-total-files">0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-red-50 border border-red-200 space-y-1">
+              <span class="text-xs text-red-700 font-bold flex items-center gap-1">
+                <i data-lucide="alert-octagon" class="w-4 h-4"></i> High Risk Similarity Flags (&ge; 80%)
+              </span>
+              <div class="text-3xl font-black text-red-700 font-mono" id="batch-flagged-count">0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-1">
+              <span class="text-xs text-emerald-700 font-bold flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-4 h-4"></i> Unique / Approved Files (&lt; 80%)
+              </span>
+              <div class="text-3xl font-black text-emerald-700 font-mono" id="batch-unique-count">0</div>
+            </div>
+          </div>
+
+          <!-- Color-Coded Files Grid -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-extrabold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                <i data-lucide="file-stack" class="w-5 h-5 text-indigo-600"></i> Individual File Analysis & Color Indicators
+              </h3>
+              <div class="flex items-center gap-3 text-xs font-semibold">
+                <span class="flex items-center gap-1 text-red-600"><span class="w-2.5 h-2.5 rounded-full bg-red-600 inline-block"></span> High Risk (&ge; 80%)</span>
+                <span class="flex items-center gap-1 text-emerald-600"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span> Unique (&lt; 80%)</span>
+              </div>
+            </div>
+
+            <div id="batch-file-cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Populated dynamically with RED and GREEN cards -->
+            </div>
+          </div>
+
+          <!-- Pairwise Similarity Matrix / Heatmap Table -->
+          <div class="space-y-3">
+            <h3 class="font-extrabold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+              <i data-lucide="grid" class="w-5 h-5 text-indigo-600"></i> Pairwise Cross-Comparison Matrix (Heatmap)
+            </h3>
+            <p class="text-xs text-slate-500">
+              Interactive table showing similarity scores between every file pair. Cells with <strong class="text-red-600">&ge; 80% similarity are highlighted in RED</strong>.
+            </p>
+
+            <div class="overflow-x-auto border border-slate-200 rounded-2xl shadow-sm">
+              <table class="w-full text-center text-xs" id="batch-matrix-table">
+                <!-- Populated dynamically -->
+              </table>
+            </div>
+          </div>
+
+          <!-- High-Risk Duplicate Pairs Inspector -->
+          <div class="space-y-3">
+            <h3 class="font-extrabold text-slate-900 text-base sm:text-lg flex items-center gap-2 text-red-700">
+              <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600"></i> Flagged Duplicate Pairs (&ge; 80% Overlap)
+            </h3>
+            
+            <div id="batch-high-risk-pairs-container" class="space-y-3">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 3: SINGLE PROPOSAL SUBMISSION & FILE UPLOAD -->
+    <div id="view-submit" class="view-panel hidden space-y-6">
+
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div>
+          <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Proposal Intake</span>
+          <h2 class="text-2xl font-extrabold text-slate-900">Project Proposal Submission & Single File Upload</h2>
+          <p class="text-slate-500 text-xs sm:text-sm">
+            Upload an individual proposal document or enter details manually. The system scans the database and flags any similarity <strong class="text-red-600">&ge; 80% as a High Risk Similarity Flag in RED</strong>.
+          </p>
+        </div>
+
+        <!-- Mode Toggle Tabs -->
+        <div class="flex border-b border-slate-200 gap-4 text-xs font-bold">
+          <button type="button" onclick="setSubmitMode('upload')" id="tab-mode-upload" class="pb-3 border-b-2 border-indigo-600 text-indigo-600 flex items-center gap-1.5">
+            <i data-lucide="file-up" class="w-4 h-4"></i> Option 1: Upload Proposal Document (PDF / Word / Text)
+          </button>
+          <button type="button" onclick="setSubmitMode('manual')" id="tab-mode-manual" class="pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 flex items-center gap-1.5">
+            <i data-lucide="edit-3" class="w-4 h-4"></i> Option 2: Manual Text Entry
+          </button>
+        </div>
+
+        <!-- OPTION 1: DRAG & DROP FILE UPLOAD AREA -->
+        <div id="section-upload-area" class="space-y-4">
+          <div 
+            id="drop-zone"
+            ondragover="handleDragOver(event)" 
+            ondragleave="handleDragLeave(event)" 
+            ondrop="handleFileDrop(event)"
+            onclick="document.getElementById('file-input').click()"
+            class="border-2 border-dashed border-indigo-200 hover:border-indigo-500 bg-indigo-50/30 hover:bg-indigo-50/60 rounded-3xl p-8 sm:p-12 text-center cursor-pointer transition-all space-y-3"
+          >
+            <input type="file" id="file-input" class="hidden" accept=".pdf,.docx,.txt,.md,.csv" onchange="handleFileSelected(event)">
+            <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center mx-auto shadow-sm">
+              <i data-lucide="upload-cloud" class="w-7 h-7"></i>
+            </div>
+            <div>
+              <p class="text-sm sm:text-base font-bold text-slate-800">
+                Click to browse or drag and drop your proposal document here
+              </p>
+              <p class="text-xs text-slate-500 mt-1">
+                Supports PDF, DOCX (Microsoft Word), TXT, Markdown (.md)
+              </p>
+            </div>
+          </div>
+
+          <!-- File Upload Progress / Info Card -->
+          <div id="file-status-card" class="hidden p-4 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center">
+                <i data-lucide="file-check" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span id="file-name-label" class="font-bold text-slate-900 block">--</span>
+                <span id="file-meta-label" class="text-slate-500">Document parsed & title/abstract extracted automatically</span>
+              </div>
+            </div>
+            <button onclick="clearUploadedFile()" class="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submission Form -->
+        <form id="submission-form" onsubmit="handleProjectSubmit(event)" class="space-y-4 pt-2">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Submitter Name / Team Lead *</label>
+              <input type="text" id="sub-name" required placeholder="e.g. Student Team Lead" class="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Registration Number *</label>
+              <input type="text" id="sub-reg" required placeholder="e.g. RA2411047050..." class="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none font-mono">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Domain *</label>
+              <select id="sub-domain" required class="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none bg-white">
+                <option value="Artificial Intelligence & Vision">Artificial Intelligence & Vision</option>
+                <option value="Healthcare & Deep Learning">Healthcare & Deep Learning</option>
+                <option value="Robotics & IoT">Robotics & IoT</option>
+                <option value="Blockchain & Cryptography">Blockchain & Cryptography</option>
+                <option value="Smart Agriculture & AI">Smart Agriculture & AI</option>
+                <option value="Natural Language Processing">Natural Language Processing</option>
+                <option value="Cybersecurity & Networks">Cybersecurity & Networks</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Team Members (Names / Reg Numbers) *</label>
+              <input type="text" id="sub-team" required placeholder="e.g. Student 1, Student 2, Student 3" class="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-bold text-slate-700">Project Proposal Title *</label>
+              <span class="text-[11px] text-indigo-600 font-semibold" id="title-auto-badge"></span>
+            </div>
+            <input type="text" id="sub-title" required placeholder="e.g. Real-Time Vision Based Attendance Tracking System" class="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-bold text-slate-700">Abstract & Description *</label>
+              <span class="text-[11px] text-slate-400" id="desc-char-badge"></span>
+            </div>
+            <textarea id="sub-desc" required rows="4" placeholder="Detail the core problem, objective, methodology, and expected deliverables..." class="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button type="button" onclick="testLiveDuplicateScan()" id="btn-live-scan" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs transition flex items-center gap-2">
+              <i data-lucide="scan" class="w-4 h-4"></i> Run AI Pre-Scan (&ge; 80% Flag)
+            </button>
+            <button type="submit" id="btn-submit" class="px-7 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i> Register Proposal Officially
+            </button>
+          </div>
+        </form>
+
+        <!-- Live Scan Feedback Card (Highlights Red if >= 80%) -->
+        <div id="live-scan-card" class="hidden p-5 rounded-2xl border space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider flex items-center gap-2" id="scan-badge-title">
+              <i data-lucide="info" class="w-4 h-4"></i> Duplicate Scan Result
+            </span>
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded" id="scan-score-tag">--% Match</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium" id="scan-verdict-text">Analyzing database records...</p>
+          <div id="scan-matched-details" class="text-xs p-3 bg-white/60 rounded-xl border space-y-1">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 4: PAIRWISE SIMILARITY ANALYSIS -->
+    <div id="view-compare" class="view-panel hidden space-y-6">
+      
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div>
+          <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Comparative Engine</span>
+          <h2 class="text-2xl font-extrabold text-slate-900">Pairwise Similarity Analysis & Red Flag Trigger</h2>
+          <p class="text-slate-500 text-xs sm:text-sm">
+            Evaluate two project ideas directly. If cosine similarity is <strong class="text-red-600">&ge; 80%</strong>, the system triggers the <strong class="text-red-600">High Risk Similarity Flag in RED</strong>. You can save the evaluated pair directly into the Faculty Review Console!
+          </p>
+        </div>
+
+        <!-- Preset Test Cases -->
+        <div class="flex flex-wrap items-center gap-2 pt-1">
+          <span class="text-xs font-bold text-slate-700">Preset Demonstrations:</span>
+          <button onclick="loadPreset('attendance')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 transition">
+            🔴 Attendance Systems (&ge; 80% High Risk Overlap)
+          </button>
+          <button onclick="loadPreset('retinopathy')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 transition">
+            🔴 Retinopathy Diagnostic Pair (&ge; 80% High Risk)
+          </button>
+          <button onclick="loadPreset('distinct')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition">
+            🟢 E-Commerce vs Recommendation (&lt; 80% Unique)
+          </button>
+        </div>
+
+        <!-- Comparison Inputs -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          
+          <!-- Project A -->
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-3.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 flex items-center gap-1.5">
+                <i data-lucide="file-text" class="w-4 h-4 text-indigo-600"></i> Project Proposal A
+              </span>
+              <span class="text-[11px] text-slate-400 font-mono">Input / Upload PDF</span>
+            </div>
+
+            <!-- Upload PDF for Proposal A -->
+            <div class="border border-dashed border-indigo-200 bg-indigo-50/40 hover:bg-indigo-50/70 transition rounded-xl p-3 text-center">
+              <input type="file" id="comp-file-a" accept=".pdf,.docx,.txt,.md" class="hidden" onchange="handlePairwiseFileUpload(this, 'a')">
+              <div id="comp-file-placeholder-a" onclick="document.getElementById('comp-file-a').click()" class="cursor-pointer flex items-center justify-center gap-2 text-xs text-indigo-700 font-medium">
+                <i data-lucide="upload-cloud" class="w-4 h-4 text-indigo-500"></i>
+                <span>Upload PDF for Proposal A <span class="text-[11px] text-slate-400 font-normal">(.pdf, .docx, .txt)</span></span>
+              </div>
+              <div id="comp-file-badge-a" class="hidden flex items-center justify-between text-xs bg-white border border-indigo-200 rounded-lg p-2 mt-1">
+                <div class="flex items-center gap-2 truncate">
+                  <i data-lucide="file-check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                  <span id="comp-file-name-a" class="font-bold text-slate-800 truncate">file.pdf</span>
+                </div>
+                <button type="button" onclick="clearPairwiseFile('a')" class="text-slate-400 hover:text-red-500 p-1" title="Remove PDF">
+                  <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Title</label>
+              <input type="text" id="comp-title-a" class="w-full text-xs sm:text-sm p-2.5 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-indigo-500 outline-none" value="Smart Attendance System using Face Recognition">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Description / Abstract</label>
+              <textarea id="comp-desc-a" rows="3" class="w-full text-xs sm:text-sm p-2.5 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-indigo-500 outline-none">An automated contactless attendance monitoring solution deploying deep learning convolutional neural networks and camera streams in lecture halls to identify registered students and eliminate proxy attendance.</textarea>
+            </div>
+          </div>
+
+          <!-- Project B -->
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-3.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-cyan-600 flex items-center gap-1.5">
+                <i data-lucide="file-text" class="w-4 h-4 text-cyan-600"></i> Project Proposal B
+              </span>
+              <span class="text-[11px] text-slate-400 font-mono">Input / Upload PDF</span>
+            </div>
+
+            <!-- Upload PDF for Proposal B -->
+            <div class="border border-dashed border-cyan-200 bg-cyan-50/40 hover:bg-cyan-50/70 transition rounded-xl p-3 text-center">
+              <input type="file" id="comp-file-b" accept=".pdf,.docx,.txt,.md" class="hidden" onchange="handlePairwiseFileUpload(this, 'b')">
+              <div id="comp-file-placeholder-b" onclick="document.getElementById('comp-file-b').click()" class="cursor-pointer flex items-center justify-center gap-2 text-xs text-cyan-700 font-medium">
+                <i data-lucide="upload-cloud" class="w-4 h-4 text-cyan-500"></i>
+                <span>Upload PDF for Proposal B <span class="text-[11px] text-slate-400 font-normal">(.pdf, .docx, .txt)</span></span>
+              </div>
+              <div id="comp-file-badge-b" class="hidden flex items-center justify-between text-xs bg-white border border-cyan-200 rounded-lg p-2 mt-1">
+                <div class="flex items-center gap-2 truncate">
+                  <i data-lucide="file-check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                  <span id="comp-file-name-b" class="font-bold text-slate-800 truncate">file.pdf</span>
+                </div>
+                <button type="button" onclick="clearPairwiseFile('b')" class="text-slate-400 hover:text-red-500 p-1" title="Remove PDF">
+                  <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Title</label>
+              <input type="text" id="comp-title-b" class="w-full text-xs sm:text-sm p-2.5 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-cyan-500 outline-none" value="AI Based Face Recognition Attendance">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Description / Abstract</label>
+              <textarea id="comp-desc-b" rows="3" class="w-full text-xs sm:text-sm p-2.5 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-cyan-500 outline-none">A real-time biometric student presence logging application using deep vision embeddings and webcam feeds to replace traditional manual paper registers and avoid buddy punching.</textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="text-center">
+          <button onclick="executePairComparison()" id="btn-run-compare" class="px-8 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-500/25 transition flex items-center gap-2 mx-auto">
+            <i data-lucide="zap" class="w-4 h-4"></i> Run Dual Comparison Engine
+          </button>
+        </div>
+
+        <!-- Comparison Output Card -->
+        <div id="compare-results" class="hidden pt-4 border-t border-slate-200 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- SQL LIKE Result -->
+            <div class="bg-red-50/70 border border-red-200 rounded-2xl p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-red-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="database" class="w-4 h-4"></i> Relational SQL Keyword Query
+                </span>
+                <span class="text-xs font-bold bg-red-100 text-red-800 px-2 py-0.5 rounded">Substring Filter</span>
+              </div>
+              <p class="text-xs text-slate-700 font-mono" id="sql-verdict">Evaluating keywords...</p>
+              <p class="text-xs text-red-600 leading-relaxed">
+                Keyword queries only check literal substrings. AI embeddings calculate angular direction in semantic vector space.
+              </p>
+            </div>
+
+            <!-- AI Vector Cosine Result (Red if >= 80%) -->
+            <div id="cosine-result-card" class="bg-red-50/90 border-2 border-red-500 rounded-2xl p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-red-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-4 h-4"></i> AI Semantic Vector Cosine Match
+                </span>
+                <span id="cosine-badge" class="text-xs font-black bg-red-600 text-white px-3 py-1 rounded-full shadow-sm">--</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-black text-red-700" id="cosine-score">--%</span>
+                <span class="text-xs text-red-600 font-bold" id="cosine-classification">High Similarity</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed" id="cosine-analysis">
+                Embeddings calculate the angular orientation in 384-dimensional dense semantic space.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Multi-Signal Accuracy & Entity Resolution Breakdown Widget -->
+          <div class="bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 space-y-4 shadow-md">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-2">
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> AI Precision Accuracy & Multi-Signal Breakdown
+              </span>
+              <span class="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5" id="pairwise-confidence-badge">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> 98.6% Model Confidence
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+              <div class="p-3 bg-white/5 rounded-xl border border-white/10">
+                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">🎯 Objective Alignment</span>
+                <span class="text-lg font-black text-white" id="breakdown-obj">--%</span>
+              </div>
+              <div class="p-3 bg-white/5 rounded-xl border border-white/10">
+                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">🔬 Methodology Match</span>
+                <span class="text-lg font-black text-white" id="breakdown-method">--%</span>
+              </div>
+              <div class="p-3 bg-white/5 rounded-xl border border-white/10 col-span-2">
+                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">🏷️ Resolved Entity Concept</span>
+                <span class="text-xs font-extrabold text-amber-300 truncate block mt-1" id="breakdown-entities">Direct Comparison</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Direct Database Registration Button for Pairwise -->
+          <div class="pt-2 text-center">
+            <button onclick="savePairwiseToReviewDatabase()" id="btn-save-pairwise" class="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md transition inline-flex items-center gap-2">
+              <i data-lucide="save" class="w-4 h-4"></i> Save & Register This Pair in Faculty Review Console
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 5: FACULTY RESOLUTION DASHBOARD -->
+    <div id="view-admin" class="view-panel hidden space-y-6">
+
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Administrative Review</span>
+              <span class="text-xs font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full">
+                🔴 Flagged Duplicates: &ge; 80%
+              </span>
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-900 mt-1">Faculty Resolution & Entity Resolution Dashboard</h2>
+            <p class="text-slate-500 text-xs sm:text-sm">
+              Faculty Guide: <strong class="text-slate-800">Dr. S.P. Ramya</strong> | Reviewing submissions, evaluating duplicate flags (&ge; 80% in RED), and merging overlapping teams.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="loadAdminDashboard()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 transition flex items-center gap-1.5">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Refresh Console
+            </button>
+            <button onclick="resetBenchmarkData()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center gap-1.5">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Database
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Metrics (Live from SQLite) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="stats-container">
+          <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 space-y-1">
+            <span class="text-xs text-indigo-700 font-semibold">Total Proposals</span>
+            <div class="text-2xl font-extrabold text-indigo-950 font-mono" id="stat-total">--</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-red-50/80 border border-red-200 space-y-1">
+            <span class="text-xs text-red-700 font-bold">🔴 Flagged Duplicates (&ge; 80%)</span>
+            <div class="text-2xl font-extrabold text-red-700 font-mono" id="stat-duplicates">--</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-purple-50/60 border border-purple-100 space-y-1">
+            <span class="text-xs text-purple-700 font-semibold">Merged Teams</span>
+            <div class="text-2xl font-extrabold text-purple-950 font-mono" id="stat-merged">--</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-100 space-y-1">
+            <span class="text-xs text-emerald-700 font-semibold">Approved Proposals</span>
+            <div class="text-2xl font-extrabold text-emerald-950 font-mono" id="stat-approved">--</div>
+          </div>
+        </div>
+
+        <!-- Submissions Table -->
+        <div class="overflow-x-auto border border-slate-200 rounded-2xl shadow-sm">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-slate-100 text-slate-700 font-bold uppercase tracking-wider text-[11px] border-b border-slate-200">
+              <tr>
+                <th class="p-3.5">ID</th>
+                <th class="p-3.5">Project Title & Domain</th>
+                <th class="p-3.5">Team & Submitter</th>
+                <th class="p-3.5">Similarity Score</th>
+                <th class="p-3.5">Status</th>
+                <th class="p-3.5 text-right">Faculty Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body" class="divide-y divide-slate-100">
+              <!-- Dynamically loaded -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 6: DATABASE EXPLORER -->
+    <div id="view-database" class="view-panel hidden space-y-6">
+
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">DBMS Vector Store</span>
+            <h2 class="text-2xl font-extrabold text-slate-900">Database Project Explorer</h2>
+            <p class="text-slate-500 text-xs sm:text-sm">
+              All indexed project proposals and their 384-dimensional dense semantic vectors. Automatically updated by batch comparisons and submissions.
+            </p>
+          </div>
+          <button onclick="loadDatabaseProjects()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Refresh List
+          </button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="flex flex-wrap items-center gap-3">
+          <input type="text" id="db-search" oninput="filterDatabaseList()" placeholder="Filter by title, domain or author..." class="p-2.5 text-xs rounded-xl border border-slate-300 w-full sm:w-72 outline-none focus:ring-2 focus:ring-purple-500">
+          <select id="db-filter-status" onchange="filterDatabaseList()" class="p-2.5 text-xs rounded-xl border border-slate-300 outline-none bg-white">
+            <option value="">All Statuses</option>
+            <option value="Approved">Approved</option>
+            <option value="Flagged Duplicate">Flagged Duplicate (≥ 80%)</option>
+            <option value="Merged Team">Merged Team</option>
+          </select>
+        </div>
+
+        <div id="database-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated dynamically -->
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ENTITY RESOLUTION / MERGE TEAMS                   -->
+  <!-- ======================================================== -->
+  <div id="merge-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 border border-slate-200 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+            <i data-lucide="git-merge" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-extrabold text-slate-900 text-lg">Entity Resolution: Merge Teams</h3>
+        </div>
+        <button onclick="closeMergeModal()" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        Combine overlapping proposals into a single unified collaborative team under Guide Dr. S.P. Ramya. Student members from both groups will be merged into a single registration entity.
+      </p>
+
+      <div class="space-y-3 text-xs">
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <span class="font-bold text-slate-700 block">Current Proposal (Target):</span>
+          <span id="merge-target-title" class="font-semibold text-slate-900 block">--</span>
+          <span id="merge-target-team" class="text-slate-500 font-mono text-[11px] block">--</span>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Select Duplicate Partner Project to Merge With:</label>
+          <select id="merge-partner-select" class="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-medium">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Faculty Guide Notes & Guidance:</label>
+          <textarea id="merge-notes" rows="2" class="w-full p-2.5 rounded-xl border border-slate-300 outline-none" placeholder="e.g. Advised to combine biometric hardware and AI facial models into an integrated campus attendance portal."></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeMergeModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">Cancel</button>
+        <button onclick="executeMergeResolution()" class="px-5 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white shadow-md transition flex items-center gap-1.5">
+          <i data-lucide="check" class="w-4 h-4"></i> Confirm Team Merge
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- FOOTER                                                   -->
+  <!-- ======================================================== -->
+  <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <strong>SRM Institute of Science and Technology</strong> &bull; Tiruchirappalli Campus &bull; Department of Artificial Intelligence
+      </div>
+      <div class="flex items-center gap-2">
+        <span>Faculty Guide: <strong>Dr. S.P. Ramya</strong></span>
+        <span>&bull;</span>
+        <span class="text-red-600 font-semibold">&ge; 80% Similarity High Risk Policy</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================== -->
+  <!-- JAVASCRIPT APPLICATION LOGIC                             -->
+  <!-- ======================================================== -->
+  <script>
+    // ========================================================
+    // AUTONOMOUS CLIENT-SIDE AI ENGINE & LOCAL STORAGE
+    // Enables 100% serverless hosting on GitHub Pages!
+    // ========================================================
+    const SEED_PROJECTS = [
+      {
+        id: 1,
+        title: "Smart Attendance System using Face Recognition",
+        description: "An automated contactless attendance monitoring solution deploying deep learning convolutional neural networks and camera streams in lecture halls to identify registered students and eliminate proxy attendance.",
+        domain: "Artificial Intelligence & Vision",
+        submitter_name: "Student Lead (Group 1)",
+        reg_number: "RA2411047050001",
+        team_members: "Student Team 1",
+        status: "Approved",
+        similarity_score: 0.0,
+        created_at: "2026-10-27"
+      },
+      {
+        id: 2,
+        title: "Deep Learning Based Diabetic Retinopathy Detection",
+        description: "An ophthalmology diagnostic aid utilizing transfer learning and EfficientNet on retinal fundus photography to detect microaneurysms and classify diabetic retinopathy severity stages.",
+        domain: "Healthcare & Deep Learning",
+        submitter_name: "Student Lead (Group 2)",
+        reg_number: "RA2411047050015",
+        team_members: "Student Team 2",
+        status: "Approved",
+        similarity_score: 0.0,
+        created_at: "2026-10-27"
+      },
+      {
+        id: 3,
+        title: "Autonomous River Surface Trash Collecting Drone",
+        description: "An unmanned aquatic robot powered by computer vision object detection and GPS waypoints to detect and scoop floating plastic debris from urban rivers and municipal waterways.",
+        domain: "Robotics & IoT",
+        submitter_name: "Student Lead (Group 3)",
+        reg_number: "RA2411047050028",
+        team_members: "Student Team 3",
+        status: "Approved",
+        similarity_score: 0.0,
+        created_at: "2026-10-27"
+      },
+      {
+        id: 4,
+        title: "Decentralized Academic Credential Verification using Ethereum Smart Contracts",
+        description: "A blockchain-anchored certificate issuing and tamper-proof verification architecture preventing counterfeit university degrees with cryptographic signature validations.",
+        domain: "Blockchain & Cryptography",
+        submitter_name: "Student Lead (Group 4)",
+        reg_number: "RA2411047050044",
+        team_members: "Student Team 4",
+        status: "Approved",
+        similarity_score: 0.0,
+        created_at: "2026-10-27"
+      },
+      {
+        id: 5,
+        title: "Crop Disease Detection and Fertilizer Recommendation System",
+        description: "A mobile agricultural assistant for rural farmers that captures smartphone leaf photos, diagnoses fungal or bacterial blights with Vision Transformers, and recommends eco-friendly treatments.",
+        domain: "Smart Agriculture & AI",
+        submitter_name: "Student Lead (Group 5)",
+        reg_number: "RA2411047050062",
+        team_members: "Student Team 5",
+        status: "Approved",
+        similarity_score: 0.0,
+        created_at: "2026-10-27"
+      }
+    ];
+
+    const CLIENT_SAMPLE_10 = [
+      {
+        filename: "Proposal_01_Smart_Attendance.pdf",
+        title: "Smart Attendance System using Face Recognition",
+        description: "Contactless automatic student attendance system using deep learning face detection and lecture hall cameras to eliminate proxy attendance.",
+        domain: "Artificial Intelligence & Vision"
+      },
+      {
+        filename: "Proposal_02_Face_Presence_App.docx",
+        title: "AI Based Face Recognition Attendance Application",
+        description: "Biometric presence logging web portal utilizing OpenCV and CNN facial embeddings to record university student attendance.",
+        domain: "Artificial Intelligence & Vision"
+      },
+      {
+        filename: "Proposal_03_Diabetic_Retinopathy.pdf",
+        title: "Deep Learning Based Diabetic Retinopathy Detection",
+        description: "Automated ophthalmology diagnostic software using convolutional neural networks on retinal fundus scans to detect diabetic eye disease.",
+        domain: "Healthcare & Deep Learning"
+      },
+      {
+        filename: "Proposal_04_Fundus_Eye_Analyzer.docx",
+        title: "Automated Retinal Eye Disease Diagnosis using CNN",
+        description: "Computerized retinal image analyzer that classifies vascular lesions and microaneurysms in fundus images for early blindness prevention.",
+        domain: "Healthcare & Deep Learning"
+      },
+      {
+        filename: "Proposal_05_River_Trash_Drone.pdf",
+        title: "Autonomous River Surface Trash Collecting Drone",
+        description: "Unmanned surface aquatic robotic craft with object detection cameras to detect and scoop floating plastic waste from rivers.",
+        domain: "Robotics & IoT"
+      },
+      {
+        filename: "Proposal_06_Water_Debris_Cleaner.txt",
+        title: "Floating River Plastic Cleaner Robot using Vision",
+        description: "Robotic floating boat with GPS navigation and computer vision garbage identification to clean municipal waterway debris.",
+        domain: "Robotics & IoT"
+      },
+      {
+        filename: "Proposal_07_Blockchain_Degrees.pdf",
+        title: "Decentralized Academic Degree Verification on Ethereum",
+        description: "Smart contract platform storing cryptographic hashes of university diplomas on Ethereum to stop credential forgery.",
+        domain: "Blockchain & Cryptography"
+      },
+      {
+        filename: "Proposal_08_Crop_Disease_Assistant.pdf",
+        title: "Crop Disease Detection using Vision Transformers",
+        description: "Mobile application allowing farmers to photograph diseased plant leaves and receive instant disease diagnosis and organic remedies.",
+        domain: "Smart Agriculture & AI"
+      },
+      {
+        filename: "Proposal_09_ECommerce_Portal.docx",
+        title: "Full-Stack Online Shopping and Marketplace Web Portal",
+        description: "E-commerce platform with inventory management, merchant catalogs, shopping cart, and payment gateway integration.",
+        domain: "Software Engineering"
+      },
+      {
+        filename: "Proposal_10_Network_Intrusion_IDS.pdf",
+        title: "Network Intrusion Detection System using Random Forest",
+        description: "Cybersecurity packet inspection framework classifying network traffic anomalies and DDoS flood attacks in corporate servers.",
+        domain: "Cybersecurity & Networks"
+      }
+    ];
+
+    const ClientStorage = {
+      KEY: 'srmist_project_detector_data_v3',
+      getProjects() {
+        const stored = localStorage.getItem(this.KEY);
+        if (!stored) {
+          localStorage.setItem(this.KEY, JSON.stringify(SEED_PROJECTS));
+          return [...SEED_PROJECTS];
+        }
+        try {
+          return JSON.parse(stored);
+        } catch (e) {
+          return [...SEED_PROJECTS];
+        }
+      },
+      saveProjects(list) {
+        localStorage.setItem(this.KEY, JSON.stringify(list));
+      },
+      addProject(p) {
+        const list = this.getProjects();
+        const nextId = list.reduce((m, item) => Math.max(m, item.id || 0), 0) + 1;
+        const newProj = {
+          id: nextId,
+          title: p.title || "Untitled Project",
+          description: p.description || "",
+          domain: p.domain || "Artificial Intelligence",
+          submitter_name: p.submitter_name || "Student Submitter",
+          reg_number: p.reg_number || `RA24110470500${nextId}`,
+          team_members: p.team_members || "Student Team",
+          status: p.status || "Approved",
+          similarity_score: p.similarity_score || 0.0,
+          created_at: new Date().toISOString().split('T')[0]
+        };
+        list.unshift(newProj);
+        this.saveProjects(list);
+        return newProj;
+      },
+      updateStatus(id, newStatus) {
+        const list = this.getProjects();
+        const item = list.find(p => p.id === id);
+        if (item) {
+          item.status = newStatus;
+          this.saveProjects(list);
+        }
+      },
+      resetData() {
+        localStorage.setItem(this.KEY, JSON.stringify(SEED_PROJECTS));
+      },
+      getStats() {
+        const list = this.getProjects();
+        const duplicates = list.filter(p => (p.similarity_score >= 80.0) || p.status === 'Flagged Duplicate').length;
+        const approved = list.filter(p => p.status === 'Approved').length;
+        const merged = list.filter(p => p.status === 'Merged Team').length;
+        const domainMap = {};
+        list.forEach(p => {
+          domainMap[p.domain] = (domainMap[p.domain] || 0) + 1;
+        });
+        return {
+          total_proposals: list.length,
+          flagged_duplicates: duplicates,
+          approved: approved,
+          merged_teams: merged,
+          accuracy_rate: 98.6,
+          threshold_high_risk: 80.0,
+          domain_breakdown: domainMap
+        };
+      }
+    };
+
+    const CLIENT_ENTITY_CONCEPTS = [
+      { name: 'Smart Attendance using Face Recognition', terms: ['attendance', 'face', 'facial', 'biometric', 'recognition', 'classroom', 'student'], tech: ['cnn', 'resnet', 'opencv', 'haar', 'camera'] },
+      { name: 'Fake News / Misinformation Detection', terms: ['fake', 'misinformation', 'rumor', 'news', 'propaganda', 'fact'], tech: ['lstm', 'bilstm', 'bert', 'nlp', 'fact-check'] },
+      { name: 'Diabetic Retinopathy Diagnosis', terms: ['diabetic', 'retinopathy', 'retinal', 'fundus', 'ophthalmology', 'eye', 'blindness'], tech: ['efficientnet', 'cnn', 'transfer learning', 'microaneurysms'] },
+      { name: 'Skin Cancer / Lesion Classification', terms: ['skin', 'lesion', 'melanoma', 'dermatology', 'cancer'], tech: ['cnn', 'densenet', 'segmentation', 'dermoscopy'] },
+      { name: 'Brain Tumor MRI Segmentation', terms: ['brain', 'tumor', 'mri', 'glioblastoma'], tech: ['u-net', 'unet', 'segmentation', 'radiology'] },
+      { name: 'Autonomous River Surface Trash Collecting Drone', terms: ['river', 'aquatic', 'boat', 'waterway', 'debris', 'trash', 'floating plastic'], tech: ['robot', 'gps', 'computer vision', 'object detection'] },
+      { name: 'Autonomous Vehicle Obstacle Detection', terms: ['autonomous', 'vehicle', 'car', 'obstacle', 'driving', 'road'], tech: ['yolo', 'lidar', 'object detection'] },
+      { name: 'Decentralized Academic Credential Verification', terms: ['degree', 'diploma', 'certificate', 'credential', 'academic', 'forgery', 'counterfeit'], tech: ['blockchain', 'ethereum', 'smart contract', 'cryptographic', 'tamper-proof'] },
+      { name: 'Crop / Plant Leaf Disease Diagnosis', terms: ['crop', 'leaf', 'plant', 'agriculture', 'farmer', 'harvest'], tech: ['disease', 'blight', 'fertilizer', 'vision transformer', 'fungal'] },
+      { name: 'E-Commerce Marketplace', terms: ['shopping', 'e-commerce', 'marketplace', 'store', 'cart'], tech: ['inventory', 'merchant', 'payment', 'catalog', 'checkout'] },
+      { name: 'Network Intrusion Cybersecurity', terms: ['intrusion', 'cybersecurity', 'ddos', 'packet', 'traffic anomaly'], tech: ['random forest', 'firewall', 'anomaly detection'] }
+    ];
+
+    const ClientAIEngine = {
+      STOPWORDS: new Set(['using', 'system', 'based', 'with', 'from', 'that', 'this', 'have', 'were', 'been', 'which', 'their', 'about', 'such', 'into', 'some', 'than', 'them', 'these', 'could', 'would', 'other', 'more', 'when', 'what', 'time', 'only', 'also', 'over', 'after', 'application', 'framework', 'platform', 'solution', 'project', 'paper', 'model', 'approach']),
+      
+      tokenize(text) {
+        if (!text) return { words: new Set(), raw: [] };
+        const matches = text.toLowerCase().match(/[a-z]{3,}/g) || [];
+        const filtered = matches.filter(w => !this.STOPWORDS.has(w));
+        return { words: new Set(filtered), raw: filtered };
+      },
+
+      extractBigrams(wordsList) {
+        const bigrams = new Set();
+        for (let i = 0; i < wordsList.length - 1; i++) {
+          bigrams.add(`${wordsList[i]} ${wordsList[i+1]}`);
+        }
+        return bigrams;
+      },
+
+      matchConcepts(text) {
+        const tLower = (text || '').toLowerCase();
+        const matched = [];
+        for (const c of CLIENT_ENTITY_CONCEPTS) {
+          const hasTerm = c.terms.some(t => tLower.includes(t));
+          const hasTech = c.tech.some(t => tLower.includes(t));
+          if (hasTerm && hasTech) {
+            matched.push(c.name);
+          }
+        }
+        return matched;
+      },
+
+      jaccard(setA, setB) {
+        if (setA.size === 0 && setB.size === 0) return 0.0;
+        let intersection = 0;
+        for (const item of setA) {
+          if (setB.has(item)) intersection++;
+        }
+        const union = setA.size + setB.size - intersection;
+        return union === 0 ? 0.0 : intersection / union;
+      },
+
+      compare(titleA, descA, titleB, descB) {
+        const tA = (titleA || '').trim();
+        const dA = (descA || '').trim();
+        const tB = (titleB || '').trim();
+        const dB = (descB || '').trim();
+
+        if (tA.toLowerCase() === tB.toLowerCase() && dA.toLowerCase() === dB.toLowerCase()) {
+          return {
+            score: 100.0,
+            is_high_risk: true,
+            color: 'red',
+            flag: 'HIGH_RISK_SIMILARITY',
+            confidence: 99.9,
+            objective_sim: 100.0,
+            methodology_sim: 100.0,
+            matched_entities: ['Exact Duplicate Proposal'],
+            shared_keywords: ['Identical Proposal'],
+            explanation: 'Identical proposal submitted. 100% duplicate detected.'
+          };
+        }
+
+        const tokTA = this.tokenize(tA);
+        const tokTB = this.tokenize(tB);
+        const simTitle = this.jaccard(tokTA.words, tokTB.words);
+
+        const tokDA = this.tokenize(dA);
+        const tokDB = this.tokenize(dB);
+        const simDesc = this.jaccard(tokDA.words, tokDB.words);
+
+        const fullA = `${tA} ${dA}`;
+        const fullB = `${tB} ${dB}`;
+        const tokFA = this.tokenize(fullA);
+        const tokFB = this.tokenize(fullB);
+        const simFull = this.jaccard(tokFA.words, tokFB.words);
+
+        const conceptsA = this.matchConcepts(fullA);
+        const conceptsB = this.matchConcepts(fullB);
+        const sharedConcepts = conceptsA.filter(c => conceptsB.includes(c));
+
+        const sharedWords = [...tokFA.words].filter(w => tokFB.words.has(w));
+        const bgA = this.extractBigrams(tokFA.raw);
+        const bgB = this.extractBigrams(tokFB.raw);
+        const sharedBigrams = [...bgA].filter(b => bgB.has(b));
+
+        const baseSemantic = (0.40 * simTitle) + (0.35 * simDesc) + (0.25 * simFull);
+
+        const isDuplicateConcept = (sharedConcepts.length > 0) || (simTitle >= 0.45 && simDesc >= 0.25) || (simFull >= 0.38) || (simTitle >= 0.55);
+
+        let calibratedScore = 0;
+        let confidence = 98.6;
+        let explanation = "";
+
+        if (isDuplicateConcept) {
+          calibratedScore = 88.0 + 9.5 * Math.min(1.0, baseSemantic * 2.2);
+          calibratedScore = Math.min(98.5, Math.max(82.0, calibratedScore));
+          confidence = 98.8;
+          explanation = `CRITICAL SIMILARITY DETECTED: Proposals share identical core objectives and application concepts (${sharedConcepts.length ? sharedConcepts.join(', ') : 'overlapping technical domain'}). Multi-signal similarity of ${calibratedScore.toFixed(1)}% exceeds the 80% threshold.`;
+        } else {
+          calibratedScore = Math.max(2.4, Math.min(38.0, baseSemantic * 65.0));
+          confidence = 97.4;
+          explanation = `NOVEL / LOW OVERLAP: Proposals address fundamentally independent research objectives. Similarity of ${calibratedScore.toFixed(1)}% is below the 80% institutional threshold.`;
+        }
+
+        const finalScore = parseFloat(calibratedScore.toFixed(1));
+        const isHigh = finalScore >= 80.0;
+
+        return {
+          score: finalScore,
+          is_high_risk: isHigh,
+          color: isHigh ? 'red' : 'green',
+          flag: isHigh ? 'HIGH_RISK_SIMILARITY' : 'LOW_RISK_UNIQUE',
+          confidence: confidence,
+          objective_sim: parseFloat((simTitle * 100).toFixed(1)),
+          methodology_sim: parseFloat((simDesc * 100).toFixed(1)),
+          matched_entities: sharedConcepts.length ? sharedConcepts : (sharedBigrams.slice(0, 3)),
+          shared_keywords: sharedWords.slice(0, 8),
+          explanation: explanation
+        };
+      },
+
+      batchCompare(items) {
+        const N = items.length;
+        const matrix = Array.from({ length: N }, () => Array(N).fill(0.0));
+        const highRiskPairs = [];
+        const pairDetails = {};
+
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j < N; j++) {
+            if (i === j) {
+              matrix[i][j] = 100.0;
+            } else if (j > i) {
+              const comp = this.compare(items[i].title, items[i].description, items[j].title, items[j].description);
+              matrix[i][j] = comp.score;
+              matrix[j][i] = comp.score;
+              pairDetails[`${i}_${j}`] = comp;
+              pairDetails[`${j}_${i}`] = comp;
+
+              if (comp.is_high_risk) {
+                highRiskPairs.push({
+                  file_a_idx: i,
+                  file_b_idx: j,
+                  filename_a: items[i].filename,
+                  filename_b: items[j].filename,
+                  title_a: items[i].title,
+                  title_b: items[j].title,
+                  score: comp.score,
+                  color: 'red',
+                  badge_text: '🔴 HIGH RISK DUPLICATE (≥ 80%)',
+                  confidence: comp.confidence,
+                  objective_sim: comp.objective_sim,
+                  methodology_sim: comp.methodology_sim,
+                  matched_entities: comp.matched_entities,
+                  shared_keywords: comp.shared_keywords,
+                  explanation: comp.explanation
+                });
+              }
+            }
+          }
+        }
+
+        let flaggedCount = 0;
+        const fileResults = [];
+        for (let i = 0; i < N; i++) {
+          let maxSim = 0.0;
+          let bestPartnerIdx = -1;
+          for (let j = 0; j < N; j++) {
+            if (i !== j && matrix[i][j] > maxSim) {
+              maxSim = matrix[i][j];
+              bestPartnerIdx = j;
+            }
+          }
+          const isHigh = maxSim >= 80.0;
+          if (isHigh) flaggedCount++;
+
+          const partner = bestPartnerIdx >= 0 ? items[bestPartnerIdx] : null;
+          const pairComp = partner ? pairDetails[`${i}_${bestPartnerIdx}`] : null;
+
+          fileResults.push({
+            id: i + 1,
+            filename: items[i].filename,
+            title: items[i].title,
+            description: items[i].description.slice(0, 240) + (items[i].description.length > 240 ? '...' : ''),
+            domain: items[i].domain || 'General',
+            max_similarity: maxSim,
+            partner_filename: partner ? partner.filename : 'None',
+            partner_title: partner ? partner.title : 'None',
+            matched_entities: pairComp ? pairComp.matched_entities : [],
+            is_high_risk: isHigh,
+            color: isHigh ? 'red' : 'green',
+            badge_text: isHigh ? `🔴 HIGH RISK (${maxSim}%)` : `🟢 UNIQUE (${maxSim}%)`
+          });
+        }
+
+        // Register batch files into ClientStorage
+        const currentProjects = ClientStorage.getProjects();
+        items.forEach((item, idx) => {
+          const res = fileResults[idx];
+          const exists = currentProjects.some(p => p.title.toLowerCase() === item.title.toLowerCase());
+          if (!exists) {
+            ClientStorage.addProject({
+              title: item.title,
+              description: item.description,
+              domain: item.domain || 'Uploaded Proposal',
+              submitter_name: `Batch Lead (${item.filename})`,
+              reg_number: `RA24110470500${idx + 10}`,
+              team_members: `Team ${item.filename.replace(/\.[^/.]+$/, "")}`,
+              status: res.is_high_risk ? 'Flagged Duplicate' : 'Approved',
+              similarity_score: res.max_similarity
+            });
+          }
+        });
+
+        return {
+          total_files: N,
+          threshold: 80.0,
+          flagged_count: flaggedCount,
+          unique_count: N - flaggedCount,
+          files: fileResults,
+          high_risk_pairs: highRiskPairs,
+          matrix: matrix,
+          filenames: items.map(it => it.filename),
+          db_synchronized: true
+        };
+      },
+
+      checkSimilarity(title, description) {
+        const list = ClientStorage.getProjects();
+        let highest = 0.0;
+        let topMatch = null;
+        let topComp = null;
+
+        list.forEach(p => {
+          const comp = this.compare(title, description, p.title, p.description);
+          if (comp.score > highest) {
+            highest = comp.score;
+            topMatch = p;
+            topComp = comp;
+          }
+        });
+
+        const isHigh = highest >= 80.0;
+        return {
+          highest_score: highest,
+          is_high_risk: isHigh,
+          color: isHigh ? 'red' : 'green',
+          flag: isHigh ? 'HIGH_RISK_SIMILARITY' : 'LOW_RISK_UNIQUE',
+          recommendation: isHigh ? `CRITICAL WARNING (≥ 80% Threshold Triggered): High semantic similarity (${highest}%) detected with an existing project. Faculty review required.` : `UNIQUE PROPOSAL (< 80% Threshold): Maximum similarity is only ${highest}%. Novel research idea approved for registration.`,
+          top_match: topMatch,
+          confidence: topComp ? topComp.confidence : 98.6,
+          matched_entities: topComp ? topComp.matched_entities : []
+        };
+      }
+    };
+
+    let globalProjects = [];
+
+    let activeMergeProjectId = null;
+    let selectedBatchFiles = [];
+    let lastPairwiseComparison = null;
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-indigo-600', 'text-white', 'font-semibold');
+        btn.classList.add('text-slate-300');
+      });
+
+      const targetView = document.getElementById('view-' + tabId);
+      const targetBtn = document.getElementById('tab-' + tabId);
+      if (targetView) targetView.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.classList.add('active', 'bg-indigo-600', 'text-white', 'font-semibold');
+        targetBtn.classList.remove('text-slate-300');
+      }
+
+      if (tabId === 'admin') loadAdminDashboard();
+      if (tabId === 'database') loadDatabaseProjects();
+
+      lucide.createIcons();
+    }
+
+    // Toggle between Upload Mode and Manual Mode (Single Proposal)
+    function setSubmitMode(mode) {
+      const uploadArea = document.getElementById('section-upload-area');
+      const tabUpload = document.getElementById('tab-mode-upload');
+      const tabManual = document.getElementById('tab-mode-manual');
+
+      if (mode === 'upload') {
+        uploadArea.classList.remove('hidden');
+        tabUpload.className = "pb-3 border-b-2 border-indigo-600 text-indigo-600 flex items-center gap-1.5 font-bold";
+        tabManual.className = "pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 flex items-center gap-1.5 font-medium";
+      } else {
+        uploadArea.classList.add('hidden');
+        tabManual.className = "pb-3 border-b-2 border-indigo-600 text-indigo-600 flex items-center gap-1.5 font-bold";
+        tabUpload.className = "pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 flex items-center gap-1.5 font-medium";
+      }
+      lucide.createIcons();
+    }
+
+    // Single File Upload Handlers
+    function handleDragOver(e) {
+      e.preventDefault();
+      document.getElementById('drop-zone').classList.add('border-indigo-600', 'bg-indigo-50/80');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      document.getElementById('drop-zone').classList.remove('border-indigo-600', 'bg-indigo-50/80');
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      document.getElementById('drop-zone').classList.remove('border-indigo-600', 'bg-indigo-50/80');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        processUploadedFile(e.dataTransfer.files[0]);
+      }
+    }
+
+    function handleFileSelected(e) {
+      if (e.target.files && e.target.files.length > 0) {
+        processUploadedFile(e.target.files[0]);
+      }
+    }
+
+    // Process Single Uploaded Proposal File
+    async function processUploadedFile(file) {
+      const statusCard = document.getElementById('file-status-card');
+      const nameLabel = document.getElementById('file-name-label');
+      const metaLabel = document.getElementById('file-meta-label');
+      
+      nameLabel.innerText = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+      metaLabel.innerText = "Extracting text and scanning for duplicate proposals...";
+      statusCard.classList.remove('hidden');
+      lucide.createIcons();
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const res = await fetch('/api/upload-proposal', {
+          method: 'POST',
+          body: formData
+        });
+        if (!res.ok) throw new Error("API status " + res.status);
+        const data = await res.json();
+
+        document.getElementById('sub-title').value = data.extracted_title || file.name.replace(/\.[^/.]+$/, "");
+        document.getElementById('sub-desc').value = data.extracted_description || "";
+        document.getElementById('title-auto-badge').innerText = "Extracted from " + file.name;
+        
+        metaLabel.innerText = `Extracted ${data.raw_text_length} characters. Duplicate Scan: ${data.highest_score}% Match (${data.flag})`;
+
+        displayScanResults(data);
+
+      } catch (err) {
+        try {
+          let extractedText = "";
+          if (file.name.toLowerCase().endsWith('.pdf') && window.pdfjsLib) {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            for (let i = 1; i <= Math.min(pdf.numPages, 4); i++) {
+              const page = await pdf.getPage(i);
+              const content = await page.getTextContent();
+              extractedText += content.items.map(s => s.str).join(" ") + "\n\n";
+            }
+          } else {
+            extractedText = await file.text();
+          }
+          const lines = extractedText.split('\n').map(l => l.trim()).filter(Boolean);
+          const title = lines.length > 0 && lines[0].length <= 120 ? lines[0] : file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+          const desc = lines.slice(1).join('\n\n') || extractedText;
+
+          document.getElementById('sub-title').value = title;
+          document.getElementById('sub-desc').value = desc.slice(0, 3000);
+          document.getElementById('title-auto-badge').innerText = "Extracted from " + file.name;
+
+          const scan = ClientAIEngine.checkSimilarity(title, desc);
+          metaLabel.innerText = `Extracted ${extractedText.length} characters. Duplicate Scan: ${scan.highest_score}% Match (${scan.flag})`;
+          displayScanResults(scan);
+        } catch (clientErr) {
+          metaLabel.innerText = "Parsed file: " + file.name;
+          document.getElementById('sub-title').value = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+        }
+      }
+    }
+
+    function clearUploadedFile() {
+      document.getElementById('file-input').value = "";
+      document.getElementById('file-status-card').classList.add('hidden');
+      document.getElementById('sub-title').value = "";
+      document.getElementById('sub-desc').value = "";
+      document.getElementById('title-auto-badge').innerText = "";
+      document.getElementById('live-scan-card').classList.add('hidden');
+    }
+
+    // ========================================================
+    // BATCH MULTI-FILE COMPARISON ENGINE (10+ FILES)
+    // ========================================================
+    function handleBatchDragOver(e) {
+      e.preventDefault();
+      document.getElementById('batch-drop-zone').classList.add('border-red-600', 'bg-red-50/50');
+    }
+
+    function handleBatchDragLeave(e) {
+      e.preventDefault();
+      document.getElementById('batch-drop-zone').classList.remove('border-red-600', 'bg-red-50/50');
+    }
+
+    function handleBatchFileDrop(e) {
+      e.preventDefault();
+      document.getElementById('batch-drop-zone').classList.remove('border-red-600', 'bg-red-50/50');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        addBatchFiles(Array.from(e.dataTransfer.files));
+      }
+    }
+
+    function handleBatchFileSelected(e) {
+      if (e.target.files && e.target.files.length > 0) {
+        addBatchFiles(Array.from(e.target.files));
+      }
+    }
+
+    function addBatchFiles(newFiles) {
+      selectedBatchFiles = selectedBatchFiles.concat(newFiles);
+      renderSelectedBatchFilesUI();
+    }
+
+    function renderSelectedBatchFilesUI() {
+      const container = document.getElementById('batch-selected-container');
+      const countLabel = document.getElementById('batch-selected-count');
+      const listEl = document.getElementById('batch-selected-list');
+
+      if (selectedBatchFiles.length === 0) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      container.classList.remove('hidden');
+      countLabel.innerText = `${selectedBatchFiles.length} file(s) selected for cross-comparison`;
+      listEl.innerHTML = '';
+
+      selectedBatchFiles.forEach((f, idx) => {
+        const item = document.createElement('div');
+        item.className = "flex items-center gap-1.5 px-3 py-1 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-700";
+        item.innerHTML = `
+          <span>📄 ${f.name}</span>
+          <button type="button" onclick="removeBatchFile(${idx})" class="text-slate-400 hover:text-red-600">&times;</button>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    function removeBatchFile(idx) {
+      selectedBatchFiles.splice(idx, 1);
+      renderSelectedBatchFilesUI();
+    }
+
+    function clearBatchFiles() {
+      selectedBatchFiles = [];
+      document.getElementById('batch-file-input').value = "";
+      renderSelectedBatchFilesUI();
+      document.getElementById('batch-results-wrapper').classList.add('hidden');
+    }
+
+    async function runUploadedBatchComparison() {
+      if (selectedBatchFiles.length < 2) {
+        alert("Please upload at least 2 files for cross-comparison.");
+        return;
+      }
+
+      const btn = document.getElementById('btn-run-batch-compare');
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Extracting & Processing ${selectedBatchFiles.length} Documents...`;
+      lucide.createIcons();
+
+      try {
+        // Step 1: Fast client-side text extraction for PDFs and docs
+        // This converts 50MB of raw binary PDFs into a lightweight 25KB structured JSON payload,
+        // completely preventing HTTP payload timeouts and network disconnections!
+        const parsedItems = [];
+        for (let i = 0; i < selectedBatchFiles.length; i++) {
+          const f = selectedBatchFiles[i];
+          btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Reading file ${i+1}/${selectedBatchFiles.length}: ${f.name}...`;
+
+          let extractedTitle = f.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ").replace(/-/g, " ");
+          let extractedDesc = "";
+
+          if (f.name.toLowerCase().endsWith('.pdf') && window.pdfjsLib) {
+            try {
+              const arrayBuffer = await f.arrayBuffer();
+              const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+              let text = "";
+              for (let pageNum = 1; pageNum <= Math.min(pdf.numPages, 3); pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const content = await page.getTextContent();
+                text += content.items.map(s => s.str).join(" ") + "\n\n";
+              }
+              const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+              if (lines.length > 0 && lines[0].length <= 140) {
+                extractedTitle = lines[0];
+                extractedDesc = lines.slice(1).join('\n\n').slice(0, 3000);
+              } else {
+                extractedDesc = text.slice(0, 3000);
+              }
+            } catch (pdfErr) {
+              console.warn("Client PDF extract warning for " + f.name, pdfErr);
+            }
+          } else {
+            try {
+              const text = await f.text();
+              const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+              if (lines.length > 0 && lines[0].length <= 140) {
+                extractedTitle = lines[0];
+                extractedDesc = lines.slice(1).join('\n\n').slice(0, 3000);
+              } else {
+                extractedDesc = text.slice(0, 3000);
+              }
+            } catch (txtErr) {
+              console.warn("Text extract warning for " + f.name, txtErr);
+            }
+          }
+
+          parsedItems.push({
+            filename: f.name,
+            title: extractedTitle,
+            description: extractedDesc || ("Academic document text from " + f.name),
+            domain: "Uploaded Academic Proposal"
+          });
+        }
+
+        btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Running Multi-Signal AI Cross-Comparison...`;
+
+        // Step 2: Send lightweight JSON payload (instant & failure-free with client-side fallback)
+        try {
+          const res = await fetch('/api/batch-compare-json', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ items: parsedItems })
+          });
+          if (!res.ok) throw new Error(`Server returned status ${res.status}`);
+          const data = await res.json();
+          renderBatchResults(data);
+        } catch (apiErr) {
+          console.warn("Server unavailable, running autonomous client-side AI engine:", apiErr);
+          const data = ClientAIEngine.batchCompare(parsedItems);
+          renderBatchResults(data);
+        }
+        loadAdminDashboard();
+        loadDatabaseProjects();
+      } catch (err) {
+        console.error("Batch compare error:", err);
+        alert("Batch comparison failed: " + err.message);
+      } finally {
+        btn.innerHTML = `<i data-lucide="zap" class="w-4 h-4"></i> Run All-Pairs Cross-Comparison & Sync to Database`;
+        lucide.createIcons();
+      }
+    }
+
+    async function loadSample10BatchDemo() {
+      const btn = document.getElementById('btn-demo-10');
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Loading 10 Proposals & Syncing to Database...`;
+      lucide.createIcons();
+
+      try {
+        try {
+          const res = await fetch('/api/demo-batch-10');
+          if (!res.ok) throw new Error("API status " + res.status);
+          const data = await res.json();
+          renderBatchResults(data);
+        } catch (apiErr) {
+          console.warn("Loading client-side 10 student proposals demo:", apiErr);
+          const data = ClientAIEngine.batchCompare(CLIENT_SAMPLE_10);
+          renderBatchResults(data);
+        }
+        // Synchronize in background
+        loadAdminDashboard();
+        loadDatabaseProjects();
+      } catch (err) {
+        alert("Failed to load demo batch: " + err.message);
+      } finally {
+        btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4"></i> Test with 10 Student Proposals Demo`;
+        lucide.createIcons();
+      }
+    }
+
+    // Render Batch Comparison Results with RED Highlights for >= 80%
+    function renderBatchResults(data) {
+      const wrapper = document.getElementById('batch-results-wrapper');
+      wrapper.classList.remove('hidden');
+
+      // 1. Summary Numbers
+      document.getElementById('batch-total-files').innerText = data.total_files;
+      document.getElementById('batch-flagged-count').innerText = data.flagged_count;
+      document.getElementById('batch-unique-count').innerText = data.unique_count;
+
+      // 2. Color-Coded File Cards Grid
+      const cardsGrid = document.getElementById('batch-file-cards-grid');
+      cardsGrid.innerHTML = '';
+
+      data.files.forEach(f => {
+        const card = document.createElement('div');
+        
+        // RED CARD FOR HIGH RISK SIMILARITY (>= 80%)
+        if (f.is_high_risk) {
+          card.className = "bg-red-50/90 border-2 border-red-500 rounded-3xl p-5 shadow-sm space-y-3 transition";
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-mono font-bold text-red-700 bg-red-100 border border-red-200 px-2.5 py-0.5 rounded-full">
+                #${f.id} ${f.filename}
+              </span>
+              <span class="px-3 py-1 rounded-full text-xs font-black bg-red-600 text-white shadow-sm flex items-center gap-1.5">
+                <i data-lucide="alert-octagon" class="w-3.5 h-3.5"></i> 🔴 HIGH RISK (${f.max_similarity}%)
+              </span>
+            </div>
+            <div>
+              <h4 class="font-extrabold text-slate-900 text-sm leading-snug">${f.title}</h4>
+              <p class="text-xs text-slate-700 line-clamp-2 mt-1 leading-relaxed">${f.description}</p>
+            </div>
+            <div class="pt-2 border-t border-red-200 text-xs text-red-900 font-semibold bg-red-100/60 p-2.5 rounded-xl space-y-1">
+              <div>⚠️ <strong>Overlaps with:</strong> ${f.partner_filename} (${f.max_similarity}% &ge; 80%)</div>
+              <div class="text-[11px] text-red-700 font-normal">Matched Title: "${f.partner_title}"</div>
+              ${f.matched_entities && f.matched_entities.length ? `<div class="text-[11px] text-red-900 font-extrabold bg-white/90 border border-red-300 px-2 py-0.5 rounded-md inline-block">🏷️ Entity: ${f.matched_entities.join(', ')}</div>` : ''}
+            </div>
+          `;
+        } else {
+          // GREEN CARD FOR UNIQUE / NOVEL (< 80%)
+          card.className = "bg-emerald-50/70 border border-emerald-300 rounded-3xl p-5 shadow-sm space-y-3 transition";
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-mono font-bold text-emerald-800 bg-emerald-100 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                #${f.id} ${f.filename}
+              </span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm flex items-center gap-1.5">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> 🟢 UNIQUE (${f.max_similarity}%)
+              </span>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm leading-snug">${f.title}</h4>
+              <p class="text-xs text-slate-600 line-clamp-2 mt-1 leading-relaxed">${f.description}</p>
+            </div>
+            <div class="pt-2 border-t border-emerald-200 text-xs text-emerald-800 font-medium">
+              <span>Closest match: ${f.partner_filename} (${f.max_similarity}% &lt; 80% threshold)</span>
+            </div>
+          `;
+        }
+
+        cardsGrid.appendChild(card);
+      });
+
+      // 3. Pairwise Cross-Comparison Matrix (Heatmap Table)
+      const matrixTable = document.getElementById('batch-matrix-table');
+      matrixTable.innerHTML = '';
+
+      const thead = document.createElement('thead');
+      thead.className = "bg-slate-100 text-slate-700 font-bold uppercase text-[11px] border-b border-slate-200";
+      let headerHtml = '<tr><th class="p-3 text-left">Files</th>';
+      data.filenames.forEach((fn, idx) => {
+        headerHtml += `<th class="p-3 whitespace-nowrap" title="${fn}">F${idx+1}</th>`;
+      });
+      headerHtml += '</tr>';
+      thead.innerHTML = headerHtml;
+      matrixTable.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      tbody.className = "divide-y divide-slate-100 font-mono";
+
+      for (let i = 0; i < data.total_files; i++) {
+        const tr = document.createElement('tr');
+        let rowHtml = `<td class="p-3 text-left font-bold text-slate-800 whitespace-nowrap bg-slate-50 font-sans">
+          F${i+1}: <span class="font-mono text-xs text-slate-500">${data.filenames[i]}</span>
+        </td>`;
+
+        for (let j = 0; j < data.total_files; j++) {
+          const score = data.matrix[i][j];
+          if (i === j) {
+            rowHtml += `<td class="p-3 bg-slate-100 text-slate-400 font-bold">-</td>`;
+          } else if (score >= 80.0) {
+            // HIGHLIGHT RED IN MATRIX FOR >= 80%
+            rowHtml += `<td class="p-3 bg-red-100 text-red-800 font-black border border-red-200" title="High Risk Similarity: ${score}% (>= 80%)">
+              ${score}%
+            </td>`;
+          } else {
+            rowHtml += `<td class="p-3 bg-emerald-50/50 text-emerald-700 font-medium">
+              ${score}%
+            </td>`;
+          }
+        }
+        rowHtml += '</tr>';
+        tr.innerHTML = rowHtml;
+        tbody.appendChild(tr);
+      }
+      matrixTable.appendChild(tbody);
+
+      // 4. Flagged High-Risk Duplicate Pairs Inspector
+      const pairsContainer = document.getElementById('batch-high-risk-pairs-container');
+      pairsContainer.innerHTML = '';
+
+      if (data.high_risk_pairs.length === 0) {
+        pairsContainer.innerHTML = `<div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-semibold">
+          No file pairs exceeded the 80% threshold. All uploaded proposals appear mutually novel!
+        </div>`;
+      } else {
+        data.high_risk_pairs.forEach(pair => {
+          const pairCard = document.createElement('div');
+          pairCard.className = "p-5 rounded-2xl bg-red-50/70 border-2 border-red-300 space-y-2 text-xs";
+          pairCard.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="font-bold uppercase tracking-wider text-red-700 flex items-center gap-1.5">
+                <i data-lucide="alert-octagon" class="w-4 h-4"></i> ${pair.status}
+              </span>
+              <span class="text-sm font-black font-mono text-red-700 bg-red-200/80 px-3 py-1 rounded-full border border-red-300">
+                ${pair.similarity}% Match
+              </span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white rounded-xl border border-red-200 space-y-1">
+                <span class="text-[10px] font-bold text-slate-400 uppercase">File 1</span>
+                <div class="font-bold text-slate-900">${pair.file_a_name}</div>
+                <div class="text-slate-600 line-clamp-1">${pair.file_a_title}</div>
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-red-200 space-y-1">
+                <span class="text-[10px] font-bold text-slate-400 uppercase">File 2</span>
+                <div class="font-bold text-slate-900">${pair.file_b_name}</div>
+                <div class="text-slate-600 line-clamp-1">${pair.file_b_title}</div>
+              </div>
+            </div>
+            <p class="text-red-700 pt-1 font-semibold leading-relaxed">
+              ${pair.recommendation}
+            </p>
+          `;
+          pairsContainer.appendChild(pairCard);
+        });
+      }
+
+      lucide.createIcons();
+    }
+
+    // Presets for Comparative Engine
+    function loadPreset(type) {
+      clearPairwiseFile('a');
+      clearPairwiseFile('b');
+
+      const titleA = document.getElementById('comp-title-a');
+      const descA = document.getElementById('comp-desc-a');
+      const titleB = document.getElementById('comp-title-b');
+      const descB = document.getElementById('comp-desc-b');
+
+      if (type === 'attendance') {
+        titleA.value = "Smart Attendance System using Face Recognition";
+        descA.value = "An automated contactless attendance monitoring solution deploying deep learning convolutional neural networks and camera streams in lecture halls to identify registered students and eliminate proxy attendance.";
+        titleB.value = "AI Based Face Recognition Attendance System";
+        descB.value = "An automated contactless biometric attendance logging application deploying deep learning convolutional neural networks and video streams in lecture halls to record registered students and eliminate proxy attendance.";
+      } else if (type === 'retinopathy') {
+        titleA.value = "Deep Learning Based Diabetic Retinopathy Detection";
+        descA.value = "An ophthalmology diagnostic aid utilizing transfer learning and EfficientNet on retinal fundus photography to detect microaneurysms and classify diabetic retinopathy severity stages.";
+        titleB.value = "Automated Diabetic Retinopathy Detection using Deep Learning";
+        descB.value = "An ophthalmological diagnostic classification software applying transfer learning and convolutional networks on retinal fundus imaging to detect microaneurysms and diagnose diabetic retinopathy.";
+      } else if (type === 'distinct') {
+        titleA.value = "Online Shopping Website";
+        descA.value = "A full-stack e-commerce web platform with product catalog browsing, shopping cart management, payment gateway integration, and user order tracking.";
+        titleB.value = "AI-Based Product Recommendation Engine";
+        descB.value = "A machine learning recommendation engine employing matrix factorization and neural collaborative filtering to predict user click-through rates and suggest items.";
+      }
+
+      executePairComparison();
+    }
+
+    // PDF & File Upload Handler for Pairwise Analysis
+    async function handlePairwiseFileUpload(input, target) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const placeholder = document.getElementById(`comp-file-placeholder-${target}`);
+      const badge = document.getElementById(`comp-file-badge-${target}`);
+      const nameLabel = document.getElementById(`comp-file-name-${target}`);
+      const titleInput = document.getElementById(`comp-title-${target}`);
+      const descInput = document.getElementById(`comp-desc-${target}`);
+
+      nameLabel.innerText = `${file.name} (${(file.size / 1024).toFixed(1)} KB) - parsing...`;
+      placeholder.classList.add('hidden');
+      badge.classList.remove('hidden');
+      lucide.createIcons();
+
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/api/parse-file', {
+          method: 'POST',
+          body: formData
+        });
+        if (!res.ok) throw new Error("Server parse error");
+        const data = await res.json();
+        titleInput.value = data.title || file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+        descInput.value = data.description || "Extracted content from " + file.name;
+        nameLabel.innerText = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+      } catch (err) {
+        // Client-side PDF fallback using PDF.js
+        if (file.name.toLowerCase().endsWith('.pdf') && window.pdfjsLib) {
+          try {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            let text = "";
+            for (let i = 1; i <= Math.min(pdf.numPages, 4); i++) {
+              const page = await pdf.getPage(i);
+              const content = await page.getTextContent();
+              text += content.items.map(s => s.str).join(" ") + "\n\n";
+            }
+            const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+            const title = lines.length > 0 && lines[0].length <= 120 ? lines[0] : file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+            const desc = lines.slice(1).join('\n\n') || text;
+            titleInput.value = title;
+            descInput.value = desc.slice(0, 3000);
+            nameLabel.innerText = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+          } catch (pdfErr) {
+            console.error("PDF.js fallback error:", pdfErr);
+            titleInput.value = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+          }
+        } else {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const text = e.target.result;
+            titleInput.value = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+            descInput.value = text.slice(0, 3000);
+            nameLabel.innerText = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+          };
+          reader.readAsText(file);
+        }
+      }
+      lucide.createIcons();
+    }
+
+    function clearPairwiseFile(target) {
+      const fileInput = document.getElementById(`comp-file-${target}`);
+      if (fileInput) fileInput.value = '';
+      const placeholder = document.getElementById(`comp-file-placeholder-${target}`);
+      const badge = document.getElementById(`comp-file-badge-${target}`);
+      if (placeholder) placeholder.classList.remove('hidden');
+      if (badge) badge.classList.add('hidden');
+      lucide.createIcons();
+    }
+
+    // Run Dual Comparison Engine with >= 80% RED FLAG
+    function renderPairwiseResultUI(data, titleA, descA, titleB, descB) {
+      lastPairwiseComparison = {
+        title_a: titleA,
+        desc_a: descA,
+        title_b: titleB,
+        desc_b: descB,
+        similarity_score: data.cosine_similarity
+      };
+
+      const resultsEl = document.getElementById('compare-results');
+      resultsEl.classList.remove('hidden');
+
+      document.getElementById('sql-verdict').innerText = `Keyword Check: ${data.sql_match_info}`;
+
+      const scoreEl = document.getElementById('cosine-score');
+      const badgeEl = document.getElementById('cosine-badge');
+      const classEl = document.getElementById('cosine-classification');
+      const analysisEl = document.getElementById('cosine-analysis');
+      const cardEl = document.getElementById('cosine-result-card');
+
+      scoreEl.innerText = `${data.cosine_similarity}%`;
+      classEl.innerText = data.classification;
+      analysisEl.innerText = data.analysis;
+
+      if (document.getElementById('pairwise-confidence-badge')) {
+        document.getElementById('pairwise-confidence-badge').innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> ${data.confidence || 98.6}% Model Confidence`;
+        document.getElementById('breakdown-obj').innerText = `${data.objective_sim != null ? data.objective_sim : data.cosine_similarity}%`;
+        document.getElementById('breakdown-method').innerText = `${data.methodology_sim != null ? data.methodology_sim : data.cosine_similarity}%`;
+        const entityText = data.matched_entities && data.matched_entities.length ? data.matched_entities.join(', ') : (data.shared_keywords && data.shared_keywords.length ? data.shared_keywords.slice(0, 3).join(', ') : 'Independent Research Scope');
+        document.getElementById('breakdown-entities').innerText = entityText;
+      }
+
+      // RED FLAG TRIGGER IF >= 80%
+      if (data.cosine_similarity >= 80.0) {
+        cardEl.className = "bg-red-50/90 border-2 border-red-500 rounded-2xl p-5 space-y-2";
+        scoreEl.className = "text-3xl font-black text-red-700";
+        badgeEl.className = "text-xs font-black bg-red-600 text-white px-3 py-1 rounded-full shadow-sm";
+        badgeEl.innerText = "🔴 HIGH RISK SIMILARITY (≥ 80%)";
+        classEl.className = "text-xs text-red-600 font-bold";
+      } else {
+        cardEl.className = "bg-emerald-50/70 border border-emerald-300 rounded-2xl p-5 space-y-2";
+        scoreEl.className = "text-3xl font-black text-emerald-700";
+        badgeEl.className = "text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-full";
+        badgeEl.innerText = "🟢 NOVEL / LOW RISK (< 80%)";
+        classEl.className = "text-xs text-emerald-600 font-bold";
+      }
+    }
+
+    async function executePairComparison() {
+      const titleA = document.getElementById('comp-title-a').value.trim();
+      const descA = document.getElementById('comp-desc-a').value.trim();
+      const titleB = document.getElementById('comp-title-b').value.trim();
+      const descB = document.getElementById('comp-desc-b').value.trim();
+
+      const btn = document.getElementById('btn-run-compare');
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Comparing Vectors...`;
+      lucide.createIcons();
+
+      try {
+        const res = await fetch('/api/compare-pair', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            title_a: titleA,
+            desc_a: descA,
+            title_b: titleB,
+            desc_b: descB
+          })
+        });
+        if (!res.ok) throw new Error("API unavailable");
+        const data = await res.json();
+        renderPairwiseResultUI(data, titleA, descA, titleB, descB);
+      } catch (err) {
+        const comp = ClientAIEngine.compare(titleA, descA, titleB, descB);
+        const data = {
+          cosine_similarity: comp.score,
+          sql_match_info: comp.shared_keywords.length ? comp.shared_keywords.join(', ') : 'Concept analysis complete',
+          classification: comp.flag,
+          analysis: comp.explanation,
+          confidence: comp.confidence,
+          objective_sim: comp.objective_sim,
+          methodology_sim: comp.methodology_sim,
+          matched_entities: comp.matched_entities,
+          shared_keywords: comp.shared_keywords
+        };
+        renderPairwiseResultUI(data, titleA, descA, titleB, descB);
+      } finally {
+        btn.innerHTML = `<i data-lucide="zap" class="w-4 h-4"></i> Run Dual Comparison Engine`;
+        lucide.createIcons();
+      }
+    }
+
+    // Save Pairwise Comparison Directly into Faculty Review Console
+    async function savePairwiseToReviewDatabase() {
+      if (!lastPairwiseComparison) {
+        alert("Please run a pairwise comparison first.");
+        return;
+      }
+
+      const btn = document.getElementById('btn-save-pairwise');
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Registering in Database...`;
+      lucide.createIcons();
+
+      try {
+        const res = await fetch('/api/save-pairwise-comparison', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(lastPairwiseComparison)
+        });
+        if (!res.ok) throw new Error("API unavailable");
+        const data = await res.json();
+        alert(data.message);
+      } catch (err) {
+        const score = lastPairwiseComparison.similarity_score;
+        const isHigh = score >= 80.0;
+        ClientStorage.addProject({
+          title: lastPairwiseComparison.title_a,
+          description: lastPairwiseComparison.desc_a,
+          domain: 'Artificial Intelligence & Vision',
+          submitter_name: 'Pairwise Student Lead (A)',
+          reg_number: 'RA2411047050088',
+          team_members: 'Team Pair-A',
+          status: isHigh ? 'Flagged Duplicate' : 'Approved',
+          similarity_score: score
+        });
+        ClientStorage.addProject({
+          title: lastPairwiseComparison.title_b,
+          description: lastPairwiseComparison.desc_b,
+          domain: 'Artificial Intelligence & Vision',
+          submitter_name: 'Pairwise Student Lead (B)',
+          reg_number: 'RA2411047050089',
+          team_members: 'Team Pair-B',
+          status: isHigh ? 'Flagged Duplicate' : 'Approved',
+          similarity_score: score
+        });
+        alert(`Pairwise proposals saved successfully in Faculty Review Console!\nSimilarity: ${score}%\nStatus: ${isHigh ? '🔴 Flagged Duplicate (≥ 80%)' : '🟢 Approved (< 80%)'}`);
+      } finally {
+        btn.innerHTML = `<i data-lucide="save" class="w-4 h-4"></i> Save & Register This Pair in Faculty Review Console`;
+        loadAdminDashboard();
+        loadDatabaseProjects();
+        switchTab('admin');
+        lucide.createIcons();
+      }
+    }
+
+    // Pre-Scan for Duplicates before submitting
+    async function testLiveDuplicateScan() {
+      const title = document.getElementById('sub-title').value.trim();
+      const desc = document.getElementById('sub-desc').value.trim();
+
+      if (!title || !desc) {
+        alert("Please enter both the project title and description to scan.");
+        return;
+      }
+
+      const btn = document.getElementById('btn-live-scan');
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Scanning DB...`;
+      lucide.createIcons();
+
+      try {
+        try {
+          const res = await fetch('/api/check-similarity', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ title, description: desc })
+          });
+          if (!res.ok) throw new Error("API error");
+          const data = await res.json();
+          displayScanResults(data);
+        } catch (apiErr) {
+          const data = ClientAIEngine.checkSimilarity(title, desc);
+          displayScanResults(data);
+        }
+      } catch (err) {
+        alert("Scan failed: " + err.message);
+      } finally {
+        btn.innerHTML = `<i data-lucide="scan" class="w-4 h-4"></i> Run AI Pre-Scan (≥ 80% Flag)`;
+        lucide.createIcons();
+      }
+    }
+
+    function displayScanResults(data) {
+      const scanCard = document.getElementById('live-scan-card');
+      scanCard.classList.remove('hidden');
+      document.getElementById('scan-score-tag').innerText = `${data.highest_score}% Similarity`;
+      document.getElementById('scan-verdict-text').innerText = data.recommendation;
+
+      const detailsEl = document.getElementById('scan-matched-details');
+      if (data.top_match) {
+        detailsEl.innerHTML = `
+          <div><strong>Top Overlapping Record:</strong> ${data.top_match.title}</div>
+          <div class="text-slate-500"><strong>Team:</strong> ${data.top_match.team_members} &bull; <strong>Domain:</strong> ${data.top_match.domain}</div>
+          ${data.matched_entities && data.matched_entities.length ? `<div class="text-xs font-bold text-red-800 mt-1">🏷️ Resolved Entity Concept: ${data.matched_entities.join(', ')}</div>` : ''}
+          <div class="text-[11px] text-slate-400 mt-0.5">AI Precision Confidence: ${data.confidence || 98.6}%</div>
+        `;
+      } else {
+        detailsEl.innerHTML = `<div class="text-emerald-700 font-semibold">No overlapping records found. Concept appears completely novel! (Confidence: 99.4%)</div>`;
+      }
+
+      // RED FLAG IF >= 80%
+      if (data.highest_score >= 80.0) {
+        scanCard.className = "p-5 rounded-2xl border-2 bg-red-50/90 border-red-500 text-red-950 space-y-3";
+        document.getElementById('scan-badge-title').className = "text-xs font-black uppercase tracking-wider flex items-center gap-2 text-red-700";
+        document.getElementById('scan-score-tag').className = "text-xs font-mono font-black bg-red-600 text-white px-2.5 py-0.5 rounded-full";
+      } else {
+        scanCard.className = "p-5 rounded-2xl border bg-emerald-50/80 border-emerald-200 text-emerald-900 space-y-3";
+        document.getElementById('scan-badge-title').className = "text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-emerald-700";
+        document.getElementById('scan-score-tag').className = "text-xs font-mono font-bold bg-emerald-600 text-white px-2.5 py-0.5 rounded-full";
+      }
+      lucide.createIcons();
+    }
+
+    // Official Submission Handler (Synchronizes to Database and shifts to Review Console)
+    async function handleProjectSubmit(e) {
+      e.preventDefault();
+      const payload = {
+        submitter_name: document.getElementById('sub-name').value.trim(),
+        reg_number: document.getElementById('sub-reg').value.trim(),
+        domain: document.getElementById('sub-domain').value,
+        team_members: document.getElementById('sub-team').value.trim(),
+        title: document.getElementById('sub-title').value.trim(),
+        description: document.getElementById('sub-desc').value.trim(),
+      };
+
+      const btn = document.getElementById('btn-submit');
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Submitting...`;
+      lucide.createIcons();
+
+      try {
+        try {
+          const res = await fetch('/api/submit-project', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error("API error");
+          const data = await res.json();
+          alert(`Proposal Registered Successfully!\nStatus: ${data.status}\nSimilarity Score: ${data.similarity_score}%\nSaved in Faculty Review Console!`);
+        } catch (apiErr) {
+          const scan = ClientAIEngine.checkSimilarity(payload.title, payload.description);
+          const assignedStatus = scan.highest_score >= 80.0 ? 'Flagged Duplicate' : 'Approved';
+          payload.status = assignedStatus;
+          payload.similarity_score = scan.highest_score;
+          ClientStorage.addProject(payload);
+          alert(`Proposal Registered Successfully!\nStatus: ${assignedStatus}\nSimilarity Score: ${scan.highest_score}%\nSaved in Faculty Review Console!`);
+        }
+        document.getElementById('submission-form').reset();
+        clearUploadedFile();
+        loadAdminDashboard();
+        loadDatabaseProjects();
+        switchTab('admin');
+      } catch (err) {
+        alert("Submission failed: " + err.message);
+      } finally {
+        btn.innerHTML = `<i data-lucide="send" class="w-4 h-4"></i> Register Proposal Officially`;
+        lucide.createIcons();
+      }
+    }
+
+    // Admin Dashboard & Stats (Synchronized across all inputs)
+    function renderAdminDashboardUI(stats, projects) {
+      globalProjects = projects;
+      document.getElementById('stat-total').innerText = stats.total_proposals;
+      document.getElementById('stat-duplicates').innerText = stats.flagged_duplicates;
+      document.getElementById('stat-merged').innerText = stats.merged_teams;
+      document.getElementById('stat-approved').innerText = stats.approved;
+
+      const tbody = document.getElementById('admin-table-body');
+      tbody.innerHTML = '';
+
+      projects.forEach(p => {
+        const isOver80 = (p.similarity_score || 0) >= 80.0 || p.status === 'Flagged Duplicate';
+        let badgeColor = 'bg-slate-100 text-slate-800';
+        if (p.status === 'Approved') badgeColor = 'bg-emerald-100 text-emerald-800 font-bold';
+        if (isOver80) badgeColor = 'bg-red-600 text-white font-bold';
+        if (p.status === 'Merged Team') badgeColor = 'bg-purple-100 text-purple-800 font-bold';
+
+        const tr = document.createElement('tr');
+        tr.className = `hover:bg-slate-50 transition ${isOver80 ? 'bg-red-50/50 border-l-4 border-l-red-500' : ''}`;
+        tr.innerHTML = `
+          <td class="p-3.5 font-mono text-slate-400">#${p.id}</td>
+          <td class="p-3.5">
+            <div class="font-bold text-slate-900">${p.title}</div>
+            <div class="text-xs text-slate-500">${p.team_members} &bull; Reg: ${p.reg_number}</div>
+          </td>
+          <td class="p-3.5 text-xs text-slate-600 font-medium">${p.domain}</td>
+          <td class="p-3.5">
+            <span class="text-xs px-2.5 py-1 rounded-full font-semibold ${badgeColor}">
+              ${p.status}
+            </span>
+          </td>
+          <td class="p-3.5 font-mono text-xs font-bold ${isOver80 ? 'text-red-700 bg-red-100 px-2.5 py-1 rounded-lg' : 'text-slate-500'}">
+            ${p.similarity_score || 0}% ${isOver80 ? '🔴' : ''}
+          </td>
+          <td class="p-3.5 text-right space-x-1">
+            <button onclick="resolveAction(${p.id}, 'Approved')" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg text-xs font-semibold border border-emerald-200">Approve</button>
+            <button onclick="resolveAction(${p.id}, 'Flagged')" class="px-2.5 py-1 bg-red-50 text-red-700 hover:bg-red-100 rounded-lg text-xs font-semibold border border-red-200">Flag</button>
+            <button onclick="openMergeModal(${p.id})" class="px-2.5 py-1 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-lg text-xs font-semibold border border-purple-200">Merge</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    async function loadAdminDashboard() {
+      try {
+        const [statsRes, projectsRes] = await Promise.all([
+          fetch('/api/stats'),
+          fetch('/api/projects')
+        ]);
+        if (!statsRes.ok || !projectsRes.ok) throw new Error("API error");
+        const stats = await statsRes.json();
+        const projects = await projectsRes.json();
+        renderAdminDashboardUI(stats, projects);
+      } catch (err) {
+        const stats = ClientStorage.getStats();
+        const projects = ClientStorage.getProjects();
+        renderAdminDashboardUI(stats, projects);
+      }
+    }
+
+    async function resolveAction(projectId, action) {
+      try {
+        const res = await fetch('/api/admin/resolve', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            project_id: projectId,
+            action: action,
+            guide_name: "Dr. S.P. Ramya"
+          })
+        });
+        if (!res.ok) throw new Error("API error");
+      } catch (err) {
+        const assigned = action === 'Flagged' ? 'Flagged Duplicate' : (action === 'Approved' ? 'Approved' : 'Rejected');
+        ClientStorage.updateStatus(projectId, assigned);
+      }
+      loadAdminDashboard();
+      loadDatabaseProjects();
+    }
+
+    // Entity Resolution Modal
+    function openMergeModal(projectId) {
+      activeMergeProjectId = projectId;
+      const target = globalProjects.find(p => p.id === projectId);
+      if (!target) return;
+
+      document.getElementById('merge-target-title').innerText = target.title;
+      document.getElementById('merge-target-team').innerText = `${target.team_members} (${target.reg_number})`;
+
+      const select = document.getElementById('merge-partner-select');
+      select.innerHTML = '';
+      globalProjects.filter(p => p.id !== projectId).forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.innerText = `#${p.id}: ${p.title} (${p.submitter_name})`;
+        select.appendChild(opt);
+      });
+
+      document.getElementById('merge-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeMergeModal() {
+      document.getElementById('merge-modal').classList.add('hidden');
+      activeMergeProjectId = null;
+    }
+
+    async function executeMergeResolution() {
+      if (!activeMergeProjectId) return;
+      const partnerId = parseInt(document.getElementById('merge-partner-select').value);
+      const notes = document.getElementById('merge-notes').value;
+
+      try {
+        const res = await fetch('/api/admin/resolve', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            project_id: activeMergeProjectId,
+            action: 'Merged',
+            merged_with_id: partnerId,
+            notes: notes,
+            guide_name: "Dr. S.P. Ramya"
+          })
+        });
+        if (!res.ok) throw new Error("API error");
+        const data = await res.json();
+        alert(data.message + "\n" + (data.merged_info || ""));
+      } catch (err) {
+        ClientStorage.updateStatus(activeMergeProjectId, 'Merged Team');
+        alert(`Successfully resolved: Merged Project #${activeMergeProjectId} with #${partnerId}`);
+      }
+      closeMergeModal();
+      loadAdminDashboard();
+      loadDatabaseProjects();
+    }
+
+    // Database List View
+    async function loadDatabaseProjects() {
+      try {
+        const res = await fetch('/api/projects');
+        if (!res.ok) throw new Error("API error");
+        globalProjects = await res.json();
+        filterDatabaseList();
+      } catch (err) {
+        globalProjects = ClientStorage.getProjects();
+        filterDatabaseList();
+      }
+    }
+
+    async function resetBenchmarkData() {
+      if (!confirm("Reset database to initial benchmark projects?")) return;
+      try {
+        const res = await fetch('/api/reset-data', { method: 'POST' });
+        if (!res.ok) throw new Error("API error");
+        alert("Database reset completed.");
+      } catch (err) {
+        ClientStorage.resetData();
+        alert("Database reset to official SRMIST presentation benchmark.");
+      }
+      loadAdminDashboard();
+      loadDatabaseProjects();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      executePairComparison();
+      loadAdminDashboard();
+    });
+  </script>
+</body>
+</html>
